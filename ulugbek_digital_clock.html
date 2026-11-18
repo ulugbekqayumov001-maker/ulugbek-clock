@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#050b08">
+  <title>Ulugbek Digital Clock</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0; min-height: 100vh; display: grid; place-items: center;
+      padding: 24px; color: #e8fff0;
+      background: radial-gradient(ellipse at center, #10251a 0%, #07110b 48%, #030604 100%);
+      font-family: Arial, Helvetica, sans-serif;
+    }
+    .wrap { width: min(100%, 760px); text-align: center; }
+    .clock-card {
+      padding: clamp(28px, 6vw, 58px) 18px;
+      border: 1px solid #28543a; border-radius: 24px;
+      background: rgba(8, 20, 12, .88);
+      box-shadow: 0 18px 70px #0009, inset 0 0 35px #1a563022;
+    }
+    .location { color: #9bb9a5; font-size: 13px; letter-spacing: .32em; }
+    #time {
+      margin: 24px 0 12px; color: #36e58a;
+      font-size: clamp(3.3rem, 13vw, 7rem); font-weight: 800;
+      letter-spacing: .035em; line-height: 1.1;
+      font-variant-numeric: tabular-nums;
+      text-shadow: 0 0 18px #36e58a66;
+    }
+    #date { color: #e1f5e7; font-size: clamp(17px, 3vw, 23px); }
+    .zone { margin-top: 22px; color: #9bb9a5; font-size: 14px; }
+    .dot {
+      display: inline-block; width: 9px; height: 9px; margin-right: 8px;
+      border-radius: 50%; background: #36e58a; box-shadow: 0 0 10px #36e58a;
+    }
+    .credit { margin-top: 34px; color: #9bb9a5; font-size: 12px; letter-spacing: .35em; }
+    .name { margin-top: 10px; font-size: clamp(17px, 4vw, 26px); font-weight: 800; letter-spacing: .06em; }
+    .copyright { margin-top: 14px; color: #718b79; font-size: 12px; letter-spacing: .12em; }
+  </style>
+</head>
+<body>
+  <main class="wrap">
+    <section class="clock-card" aria-label="O‘zbekiston raqamli soati">
+      <div class="location">UZBEKISTAN · TASHKENT</div>
+      <div id="time" aria-live="off">00:00:00</div>
+      <div id="date">Sana yuklanmoqda...</div>
+      <div class="zone"><span class="dot"></span>O‘zbekiston vaqti · UTC+5</div>
+    </section>
+    <div class="credit">MADE BY</div>
+    <div class="name">ULUGBEK QAYUMOV ALISHEROVICH</div>
+    <div class="copyright">© 2026 · ALL RIGHTS RESERVED</div>
+  </main>
+  <script>
+    const timeEl = document.getElementById('time');
+    const dateEl = document.getElementById('date');
+
+    function updateClock() {
+      const now = new Date();
+      timeEl.textContent = new Intl.DateTimeFormat('en-GB', {
+        timeZone: 'Asia/Tashkent',
+        hour: '2-digit', minute: '2-digit', second: '2-digit',
+        hour12: false
+      }).format(now);
+
+      dateEl.textContent = new Intl.DateTimeFormat('uz-UZ', {
+        timeZone: 'Asia/Tashkent',
+        weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
+      }).format(now);
+    }
+
+    updateClock();
+    setInterval(updateClock, 1000);
+  </script>
+</body>
+</html>
